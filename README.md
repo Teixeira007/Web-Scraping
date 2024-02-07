@@ -41,6 +41,14 @@ import re
 import os
 import zipfile
 ```
+
+### Constantes Explícitas
+```python
+BASE_URL = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos"
+OUTPUT_FOLDER = 'downloads'
+ZIP_FILENAME = 'arquivos_pdfs.zip'
+```
+
 ### Função para download do arquivo
 ```python
 def download_file(pdf_url, filename):
@@ -54,7 +62,12 @@ def zip_file(zip_filename, downloaded_files):
 ```
 Esta função recebe o nome do arquivo ZIP desejado e uma lista de caminhos dos arquivos a serem compactados. Utiliza a biblioteca zipfile para criar um arquivo ZIP contendo os arquivos fornecidos.
 
-### Main Code
+### Função Main
+```python
+def main():
+    # ... código principal ...
+```
+
 O código principal realiza as seguintes etapas:
 1. Faz uma requisição HTTP GET na URL fornecida.
 2. Verifica se a pasta de saída downloads existe. Se não existir, cria-a.
