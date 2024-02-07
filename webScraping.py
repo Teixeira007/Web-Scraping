@@ -52,11 +52,9 @@ if response.status_code == 200:
         download_file(pdf_url, filename)
         
         downloaded_files.append(filename)
-    print(downloaded_files)
     #Criar um zip com os arquivos baixados
     zip_filename = 'arquivos_pdfs.zip'
     zip_file(zip_filename, downloaded_files)
     
-
 else:
     print("Erro ao acessar apágina", response.status_code)
