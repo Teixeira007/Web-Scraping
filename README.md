@@ -54,7 +54,7 @@ ZIP_FILENAME = 'arquivos_pdfs.zip'
 def download_file(pdf_url, filename):
     # ... código para fazer o download do arquivo ...
 ```
-Esta função recebe a URL do arquivo PDF e o nome do arquivo desejado. Realiza uma requisição HTTP GET para a URL, verifica se a resposta foi bem-sucedida (status code 200) e salva o conteúdo do arquivo no diretório especificado.
+Esta função recebe a URL de um arquivo PDF e o nome desejado para o arquivo. Realiza uma requisição HTTP GET para a URL, verifica se a resposta foi bem-sucedida (status code 200) e baixa o conteúdo do arquivo em partes, salvando-o no diretório especificado. O parâmetro stream=True na solicitação permite o download eficiente em chunks, otimizando o uso de memória durante o processo.
 ### Função para Compactar Arquivos em ZIP
 ```python
 def zip_file(zip_filename, downloaded_files):
