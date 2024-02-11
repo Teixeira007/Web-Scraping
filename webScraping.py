@@ -1,5 +1,5 @@
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
 import re
 import os
 import zipfile
@@ -11,7 +11,7 @@ ZIP_FILENAME = 'arquivos_pdfs.zip'
 
 #Função para fazer o download do arquivo recebendo a url e o nome
 def download_file(pdf_url, filename):
-    pdf_response = requests.get(pdf_url)
+    pdf_response = requests.get(pdf_url, stream=True)
     if pdf_response.status_code == 200:
         with open(filename, 'wb') as pdf_file:
             pdf_file.write(pdf_response.content)
@@ -38,11 +38,14 @@ def main():
 
     #Se a requisição foi um sucesso
     if response.status_code == 200:
-        #utilizando o beautifulSoup para  analisar o html da página
-        soup = BeautifulSoup(response.text, 'html.parser')
+        # Definindo o filtro para extrair apenas os links relevantes
+        link_filter = SoupStrainer('a', href=re.compile(r'Anexo.*\.pdf$'))
+
+         #utilizando o beautifulSoup para  analisar o html com filtro
+        soup = BeautifulSoup(response.text, 'html.parser', parse_only=link_filter)
 
         #Extraindo links de PDF que contém a palavra "anexo"
-        links_pdfs = soup.find_all('a', href=re.compile(r'Anexo.*\.pdf$'))
+        links_pdfs = soup.find_all('a')
 
 
         for link in links_pdfs:
