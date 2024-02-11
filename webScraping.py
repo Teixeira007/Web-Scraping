@@ -14,7 +14,9 @@ def download_file(pdf_url, filename):
     pdf_response = requests.get(pdf_url, stream=True)
     if pdf_response.status_code == 200:
         with open(filename, 'wb') as pdf_file:
-            pdf_file.write(pdf_response.content)
+            for chunk in pdf_response.iter_content(chunk_size=8192):
+                if chunk:
+                    pdf_file.write(chunk)
 
 
 #Função para zipar os arquivos, recebendo o nome do arquivo zip e uma lista dos caminhos dos arquivos a serem zipados
@@ -38,16 +40,12 @@ def main():
 
     #Se a requisição foi um sucesso
     if response.status_code == 200:
-        # Definindo o filtro para extrair apenas os links relevantes
+        # Definindo o filtro para extrair apenas os links relevantes, aqueles que tem a palavra "Anexo" e são PDFs
         link_filter = SoupStrainer('a', href=re.compile(r'Anexo.*\.pdf$'))
 
-         #utilizando o beautifulSoup para  analisar o html com filtro
-        soup = BeautifulSoup(response.text, 'html.parser', parse_only=link_filter)
-
-        #Extraindo links de PDF que contém a palavra "anexo"
-        links_pdfs = soup.find_all('a')
-
-
+        #Utilizando o beautifulSoup para  analisar o html com filtro 
+        links_pdfs = BeautifulSoup(response.text, 'html.parser', parse_only=link_filter)
+        
         for link in links_pdfs:
             pdf_url = link.get('href')
 

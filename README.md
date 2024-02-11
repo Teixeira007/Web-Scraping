@@ -71,9 +71,8 @@ def main():
 O código principal realiza as seguintes etapas:
 1. Faz uma requisição HTTP GET na URL fornecida.
 2. Verifica se a pasta de saída downloads existe. Se não existir, cria-a.
-3. Utiliza o SoupStrainer para filtrar apenas os elementos <a> relevantes durante a análise HTML
-3. Utiliza o BeautifulSoup com o SoupStrainer para analisar o HTML da página, considerando apenas os elementos <a> filtrados.
-4. Extrai links de PDF que contenham a palavra "Anexo" em sua URL.
+3. Utiliza o SoupStrainer para filtrar apenas os elementos <a> relevantes durante a análise HTML, aqueles que tem a palavra "Anexo" e são PDFs
+4. Utiliza o BeautifulSoup com o SoupStrainer para analisar o HTML da página, considerando apenas os elementos <a> filtrados.
 5. Para cada link, extrai o nome do arquivo do URL, realiza o download em partes (usando stream=True) e armazena o caminho do arquivo na lista downloaded_files.
 6. Cria um arquivo ZIP (arquivos_pdfs.zip) contendo os arquivos baixados.
 
